@@ -6,7 +6,7 @@ import { CreateOfferDto } from '../dtos/create-offer.dto';
 
 @Injectable()
 export class OfferService {
-  constructor(@InjectModel('Oferta') private readonly offerModel: Model<Offer>) {}
+  constructor(@InjectModel('Offer') private readonly offerModel: Model<Offer>) {}
 
   async create(createOfferDto: CreateOfferDto): Promise<Offer> {
     const createdOffer = new this.offerModel(createOfferDto);
