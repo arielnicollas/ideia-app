@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: nest-api
+    build:
+      context: ./       # O 'context' agora é o diretório 'idea-close' onde os arquivos do projeto estão
+      dockerfile: ./Dockerfile      # O caminho para o Dockerfile é relativo ao diretório onde o docker-compose.yml está localizado
+      target: development           # Define o target de build como 'development'
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      MONGO_URI: mongodb://nest_admin:nest_password@mongodb:27017/nest_db?authSource=admin
+    volumes:
+      - .:/usr/src/app/nestjs   # Mapeia o diretório 'idea-close' para o container
+    command: npm run start:dev
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: nest_admin
+      MONGO_INITDB_ROOT_PASSWORD: nest_password
+      MONGO_INITDB_DATABASE: nest_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
