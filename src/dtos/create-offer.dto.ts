@@ -1,9 +1,29 @@
+// import { IsString, IsNotEmpty, IsDateString } from 'class-validator';
+
 export class CreateOfferDto {
-    titulo: string;
-    descricao: string;
-    link_afiliado: string;
-    data_expiracao: Date;
-    loja_associada: string;
-    categoria: string;
+  // @IsString()
+  // @IsNotEmpty()
+  titulo: string;
+
+  // @IsString()
+  // @IsNotEmpty()
+  descricao: string;
+
+  // @IsString()
+  // @IsNotEmpty()
+  link_afiliado: string;
+
+  // @IsDateString()
+  // @IsNotEmpty()
+  data_expiracao: string;
+
+  // @IsString()
+  // @IsNotEmpty()
+  loja_associada: string;
+
+  // @IsString()
+  // @IsNotEmpty()
+  categoria: string;
+
   }
   
