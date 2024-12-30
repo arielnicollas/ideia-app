@@ -16,4 +16,20 @@ export class OfferService {
   async update(id: string, createOfferDto: CreateOfferDto): Promise<Offer> {
     return this.offerModel.findByIdAndUpdate(id, createOfferDto, { new: true });
   }
+
+  async findOffersByCategory(categoria: string): Promise<Offer[]> {
+    // if (!category || typeof category !== 'string') {
+    //   throw new Error('Invalid category. Category must be a non-empty string.');
+    // }
+    
+    // const allowedCategorias = ['Clothing', 'Food', 'Technology'];
+
+    // if(!allowedCategorias.includes(category)){
+
+    // }
+
+    const offers = await this.offerModel.find({ categoria }).exec();
+    console.log('Ofertas encontradas:', offers);
+    return offers
+  }
 }

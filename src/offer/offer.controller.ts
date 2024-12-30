@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Put, Param, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Post, Body, Put, Get, Param, Query, BadRequestException, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { CreateOfferDto } from '../dtos/create-offer.dto';
 import { Offer } from '../schemas/offer.schema';
@@ -20,6 +20,31 @@ export class OfferController {
     return this.offerService.update(id, createOfferDto);
   }
 
+
+  @Get()
+async getOffersByCategory(@Query('categoria') categoria: string): Promise<Offer[]> {
+  console.log(categoria)
+  if (!categoria) {
+    throw new BadRequestException('Category query parameter is required');
+  } 
+
+  const offers = await this.offerService.findOffersByCategory(categoria);
+  if (offers.length === 0) {
+    throw new BadRequestException('No offers found for the specified category');
+  }
+
+  console.log(offers);
+
+  return offers
+}
+
+  // @Get('category/:category')
+  // async getOffersByCategory(@Param('categoria') categoria: string): Promise<Offer[]> {
+    
+  //   // console.log(category)
+  //   return await this.offerService.findOffersByCategory(categoria);
+  // }
+
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('image', {
@@ -36,3 +61,5 @@ export class OfferController {
     return { message: 'Imagem enviada com sucesso!', filename: file.filename };
   }
 }
+
+
